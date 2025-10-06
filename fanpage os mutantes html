@@ -1,98 +1,279 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Desenhar sobre Espiral</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Os Mutantes: Psicodelia que marcou gerações</title>
   <style>
-    body { text-align: center; font-family: sans-serif; }
-    canvas {
-      border: 1px solid #ccc;
-      touch-action: none;
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
+    body {
+      background-image: url('https://img.freepik.com/fotos-premium/fundo-vertical-amarelo-para-banner-poster-story-ad-celebrations-e-varios-trabalhos-de-design_7954-51255.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      font-family: Didot, 'Playfair Display', serif;
+      color: #CC0425;
+      text-align: center;
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+
+      /* Cursor de */
+      cursor: url('https://img.icons8.com/?size=64&id=52516&format=png') 12 12, auto;
     }
-    #controls {
-      margin-top: 10px;
+
+    h1, h3 {
+      margin: 0 0 20px 0;
+    }
+
+    .header-mutantes {
+      background-color: #FFEA00;
+      padding: 20px;
+      text-align: center;
+      color: red;
+      font-family: 'Didot', 'Playfair Display', serif;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .header-mutantes h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+    }
+
+    .header-mutantes nav {
+      margin-top: 15px;
+    }
+
+    .header-mutantes nav a {
+      color: red;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .header-mutantes nav a:hover {
+      color: #ffd700;
+    }
+
+    @media (max-width: 600px) {
+      .header-mutantes nav {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .header-mutantes nav a {
+        margin: 0;
+      }
+    }
+
+    .full-width-image {
+      width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      margin-bottom: 45px;
+      border-radius: 8px;
+    }
+
+    iframe {
+      margin: 20px auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .slideshow-container {
+      max-width: 600px;
+      position: relative;
+      margin: 40px auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .mySlides {
+      display: none;
+    }
+
+    .mySlides img {
+      width: 100%;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      padding: 16px;
+      margin-top: -22px;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      transition: 0.3s ease;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+      background-color: rgba(0,0,0,0.4);
+      z-index: 10;
+    }
+
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .prev:hover, .next:hover {
+      background-color: rgba(0,0,0,0.8);
+    }
+
+    .fade {
+      animation-name: fade;
+      animation-duration: 1.5s;
+    }
+
+    @keyframes fade {
+      from {opacity: 0.4} 
+      to {opacity: 1}
+    }
+
+    #lyrics {
+      margin-top: 50px;
+      font-size: 1.8em;
+      min-height: 60px;
+      color: #693736;
+      font-weight: bold;
     }
   </style>
 </head>
+
 <body>
 
-<h2>Desenho de Espiral</h2>
+  <!-- HEADER INCLUÍDO -->
+  <header class="header-mutantes">
+    <h1>Os Mutantes Fanpage</h1>
+    <nav>
+      <a href="mutantes.html">Home</a>
+      <a href="informacoes.html">Informações</a>
+      <a href="contato.html">Contato</a>
+    </nav>
+  </header>
 
-<canvas id="canvas" width="400" height="400"></canvas>
+  <!-- IMAGEM DE CAPA -->
+  <img 
+    src="https://lobopopart.com.br/wp-content/uploads/2017/08/Movimento-Psicodelico-dos-anos-60.jpg" 
+    alt="Imagem dos Mutantes" 
+    class="full-width-image"
+  >
 
-<div id="controls">
-  <button onclick="clearCanvas()">Limpar</button>
-  <button onclick="exportImage()">Exportar PNG</button>
-</div>
+  <!-- TÍTULOS -->
+  <h1>Os Mutantes: Psicodelia que marcou gerações</h1>
+  <h3>Explore a história, a música e o legado da banda que revolucionou o som brasileiro.</h3>
 
-<script>
-  const canvas = document.getElementById('canvas');
-  const ctx = canvas.getContext('2d');
-  let drawing = false;
+  <!-- YOUTUBE PLAYER -->
+  <div id="player"></div>
+  <div id="lyrics"></div>
 
-  // 🌀 Desenha uma espiral de fundo
-  function drawSpiral() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = '#cccccc';
-    ctx.lineWidth = 1;
+  <!-- GALERIA -->
+  <h1> ⋆ </h1>
+  <h1>Galeria Mutante</h1>
+  <h2>Porque algumas histórias precisam ser vistas.<br> Confira nossa seleção especial de fotos da banda.</h2>
 
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    const numLoops = 50;
-    const step = 0.15;
+  <div class="slideshow-container">
+    <div class="mySlides fade">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaZAL6g_lDtl-4dyX5Rum2OlaVRCGe_-ihgQ&s" alt="Imagem 0">
+    </div>
+<div class="mySlides fade">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3lfhCJ53ZxjAM_xOSWcnei9V1y14efybfLg&s" alt="Imagem 1">
+    </div>
+    <div class="mySlides fade">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROi3mFhc3ppCkpApMtl4_VD07cNpmFObgUiQ&s" alt="Imagem 2">
+    </div>
+    <div class="mySlides fade">
+      <img src="https://sibila.com.br/wp-content/uploads/2015/05/mutantes1_600x.jpg" alt="Imagem 3">
+    </div>
+    <div class="mySlides fade">
+      <img src="data:image/jpeg;base64,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" alt="Imagem4">
+    </div>
 
-    ctx.beginPath();
-    for (let i = 0; i < numLoops * Math.PI; i += step) {
-      const radius = 5 + i;
-      const x = centerX + radius * Math.cos(i);
-      const y = centerY + radius * Math.sin(i);
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  </div>
+
+  <!-- SLIDESHOW SCRIPT -->
+  <script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
     }
-    ctx.stroke();
-  }
 
-  // ✍️ Começar/desenhar/parar com mouse/touch
-  canvas.addEventListener('mousedown', () => drawing = true);
-  canvas.addEventListener('mouseup', () => drawing = false);
-  canvas.addEventListener('mousemove', draw);
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slides[slideIndex-1].style.display = "block";
+    }
+  </script>
 
-  canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true });
-  canvas.addEventListener('touchend', e => { e.preventDefault(); drawing = false });
-  canvas.addEventListener('touchmove', e => {
-    e.preventDefault();
-    const touch = e.touches[0];
-    const rect = canvas.getBoundingClientRect();
-    const x = touch.clientX - rect.left;
-    const y = touch.clientY - rect.top;
-    draw({ offsetX: x, offsetY: y });
-  });
+  <!-- YOUTUBE PLAYER + LETRA -->
+  <script>
+    let player;
+    let currentIndex = -1;
+    const lyrics = [
+      { time: 2, text: "♫⋆｡♪  𝄞 ₊˚ ‧ ⊹" },
+      { time: 12, text: "  𝄞 ₊˚ ‧ ♪  ˚ ⊹" }, 
+      { time: 22, text: "♫₊ ♪ *♬‧₊" },  
+      { time: 29, text: "♫⋆Eu quis cantar, minha canção iluminada de sol｡♪" },
+      { time: 33, text: "♫⋆Soltei os panos sobre os mastros no ar｡♪" },
+      { time: 38, text: "♫⋆Mas as pessoas na sala de jantar｡♪" },
+      { time: 47, text: "♫⋆Essas pessoas na sala de jantar｡♪" },
+      { time: 50, text: "♫⋆São ocupadas em nascer e morrer｡♪" },
 
-  function draw(e) {
-    if (!drawing) return;
-    ctx.strokeStyle = '#000';
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
-  }
+      
+    ];
 
-  function clearCanvas() {
-    drawSpiral(); // Redesenha a espiral ao limpar
-  }
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '360',
+        width: '640',
+        videoId: 'gfs9DC4GNr0',
+        events: {
+          'onReady': startLyricsSync
+        }
+      });
+    }
 
-  function exportImage() {
-    const link = document.createElement('a');
-    link.download = 'desenho.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-  }
+    function startLyricsSync() {
+      setInterval(() => {
+        const currentTime = player.getCurrentTime();
+        for (let i = lyrics.length - 1; i >= 0; i--) {
+          if (currentTime >= lyrics[i].time) {
+            if (currentIndex !== i) {
+              document.getElementById('lyrics').innerText = lyrics[i].text;
+              currentIndex = i;
+            }
+            break;
+          }
+        }
+      }, 500);
+    }
 
-  // Inicializa com a espiral
-  drawSpiral();
-</script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  </script>
 
 </body>
 </html>
+
