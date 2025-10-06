@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Desenhar sobre Espiral</title>
+  <style>
+    body { text-align: center; font-family: sans-serif; }
+    canvas {
+      border: 1px solid #ccc;
+      touch-action: none;
+    }
+    #controls {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Desenho de Espiral</h2>
+
+<canvas id="canvas" width="400" height="400"></canvas>
+
+<div id="controls">
+  <button onclick="clearCanvas()">Limpar</button>
+  <button onclick="exportImage()">Exportar PNG</button>
+</div>
+
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+
+  // 🌀 Desenha uma espiral de fundo
+  function drawSpiral() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = '#cccccc';
+    ctx.lineWidth = 1;
+
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const numLoops = 50;
+    const step = 0.15;
+
+    ctx.beginPath();
+    for (let i = 0; i < numLoops * Math.PI; i += step) {
+      const radius = 5 + i;
+      const x = centerX + radius * Math.cos(i);
+      const y = centerY + radius * Math.sin(i);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+
+  // ✍️ Começar/desenhar/parar com mouse/touch
+  canvas.addEventListener('mousedown', () => drawing = true);
+  canvas.addEventListener('mouseup', () => drawing = false);
+  canvas.addEventListener('mousemove', draw);
+
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true });
+  canvas.addEventListener('touchend', e => { e.preventDefault(); drawing = false });
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    draw({ offsetX: x, offsetY: y });
+  });
+
+  function draw(e) {
+    if (!drawing) return;
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+  }
+
+  function clearCanvas() {
+    drawSpiral(); // Redesenha a espiral ao limpar
+  }
+
+  function exportImage() {
+    const link = document.createElement('a');
+    link.download = 'desenho.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }
+
+  // Inicializa com a espiral
+  drawSpiral();
+</script>
+
+</body>
+</html>
